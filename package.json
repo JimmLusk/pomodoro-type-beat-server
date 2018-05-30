@@ -2,14 +2,14 @@
   "name": "pomodoro-type-beat-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node server.js",
     "mocha": "mocha --exit --file test/setup.test.js '!(node_modules)/**/*test.js'",
     "mocha-exit0": "mocha --exit --file test/setup.test.js '!(node_modules)/**/*test.js' || true",
     "test": "node --exec npm run mocha-exit0",
     "cover": "node --exec nyc --reporter=lcov --reporter=text-summary npm run mocha-exit0",
-    "heroku": "node index.js",
+    "heroku": "node server.js",
     "travis": "npm run mocha"
   },
   "author": "Jimmy Lusk <ajameslusk@gmail.com>",
