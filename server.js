@@ -1,14 +1,17 @@
 'use strict';
 
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
+const passport = require('passport');
 
 const { PORT, CLIENT_ORIGIN } = require('./config');
 const { dbConnect } = require('./db-mongoose');
-// const {dbConnect} = require('./db-knex');
 
+const { router: usersRouter } = require('./users');
+const { router: authRouter, localStrategy, jwtStrategy} = require('./auth');
 
 const app = express();
 
@@ -24,8 +27,15 @@ app.use(
   })
 );
 
-app.get('/api/', (req, res, next) => {
-  
+passport.use(localStrategy);
+passport.use(jwtStrategy);
+
+app.use('/api/users/', usersRouter);
+app.use('/api/auth/', authRouter);
+
+
+app.use('*', (req, res) => {
+  return res.status(404).json({ message: 'Not Found' });
 });
 
 function runServer(port = PORT) {

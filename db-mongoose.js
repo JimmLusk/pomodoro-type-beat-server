@@ -2,9 +2,9 @@
 
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-const { MONGODB_URI } = require('./config');
+const { DATABASE_URL, DEV_DATABASE_URL } = require('./config');
 
-function dbConnect(url = MONGODB_URI) {
+function dbConnect(url = DEV_DATABASE_URL) {
   return mongoose.connect(url)
     .then(instance => {
       const conn = instance.connections[0];

@@ -3,11 +3,13 @@
 module.exports = {
   PORT: process.env.PORT || 8080,
   CLIENT_ORIGIN: process.env.CLIENT_ORIGIN || 'http://localhost:3000',
-  MONGODB_URI: 
-    process.env.MONGODB_URI || 'mongodb://localhost/pomodoro',
-  DATABASE_URL:
-    'mongodb://dev:sh33tz@ds139970.mlab.com:39970/pomodoro-type-beat',
+  DEV_DATABASE_URL: 
+    process.env.DEV_DATABASE_URL || 'mongodb://localhost/pomodoro-dev',
+  DATABASE_URL: 
+    process.env.DATABASE_URL || 'mongodb://localhost/pomodoro',
   // TEST_DATABASE_URL:
   //     process.env.TEST_DATABASE_URL ||
-  //     mongodb://localhost/thinkful-backend-test'
+  //     mongodb://localhost/thinkful-backend-test',
+  JWT_SECRET : process.env.JWT_SECRET,
+  JWT_EXPIRY : process.env.JWT_EXPIRY || '7d' ,
 };
