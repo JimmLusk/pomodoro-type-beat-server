@@ -5,9 +5,6 @@ const { Tomat } = require('./tomatModel');
 const router = express.Router();
 const jsonParser = bodyParser.json();
 
-
-
-
 router.post('/', jsonParser, (req, res, next) =>{
   let {username, password, name} = req.body;
   // Add validation here
