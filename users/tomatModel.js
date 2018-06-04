@@ -7,7 +7,7 @@ const TomatSchema = mongoose.Schema({
   type: {
     type: String,
   },
-  varity: {
+  variety: {
     type: String,
     default: 'normal',
   }

@@ -18,17 +18,16 @@ const UserSchema = mongoose.Schema({
     type: String,
     default: '',
   },
-  tomats:{
-    type: [TomatSchema],
-    default: [],
-  },
+  tomats: [TomatSchema],
+
 });
 
 UserSchema.methods.serialize = function() {
   return {
     username: this.username || '',
     name: this.name || '',
-    tomats: this.tomats || [],
+    tomats: this.tomats,
+    id: this._id,
   };
 };
 

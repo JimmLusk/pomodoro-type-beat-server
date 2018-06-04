@@ -43,12 +43,29 @@ router.post('/', jsonParser, (req, res, next) =>{
     });
 });
 
-
-
 router.get('/', (req, res) => {
   return User.find()
     .then(users => res.json(users.map(user => user.serialize())))
     .catch(err => res.status(500).json({message: 'Internal server error'}));
+});
+
+router.put('/tomat/:id', jsonParser, (req, res, next) => {
+  const { id } = req.params;
+  const { tomat } = req.body;
+  let user;
+  return User.find({_id: id})
+    .then(_user => {
+      user = _user;
+      console.log('user:' + _user);
+      return User.findOneAndUpdate({_id: id}, {$push:{tomats: { type:tomat.type, variety:tomat.variety}}}, {new: true});
+    })
+    .then(result => {
+      console.log(result);
+      res.status(204).json(result);
+    })
+    .catch(err => {
+      console.error(err);
+    });
 });
 
 module.exports = {router};
