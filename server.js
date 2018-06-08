@@ -21,11 +21,11 @@ app.use(
   })
 );
 
-// app.use(
-//   cors({
-//     origin: PROD_CLIENT_ORIGIN
-//   })
-// );
+app.use(
+  cors({
+    origin: PROD_CLIENT_ORIGIN
+  })
+);
 
 passport.use(localStrategy);
 passport.use(jwtStrategy);
