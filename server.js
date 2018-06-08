@@ -7,7 +7,7 @@ const morgan = require('morgan');
 // const mongoose = require('mongoose');
 const passport = require('passport');
 
-const { PORT, CLIENT_ORIGIN } = require('./config');
+const { PORT, PROD_CLIENT_ORIGIN } = require('./config');
 const { dbConnect } = require('./db-mongoose');
 
 const { router: usersRouter } = require('./users');
@@ -23,7 +23,7 @@ app.use(
 
 app.use(
   cors({
-    origin: CLIENT_ORIGIN
+    origin: PROD_CLIENT_ORIGIN
   })
 );
 
