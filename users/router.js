@@ -1,9 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { User } = require('./model');
-const { Tomat } = require('./tomatModel');
 const router = express.Router();
 const jsonParser = bodyParser.json();
+const passport = require('passport');
 
 router.post('/', jsonParser, (req, res, next) =>{
   let {username, password, name} = req.body;
@@ -21,11 +21,9 @@ router.post('/', jsonParser, (req, res, next) =>{
           location: 'username'
         });
       }
-      console.log('before hash');
       return User.hashPassword(password);
     })
     .then(hash => {
-      console.log('hased password');
       return User.create({
         username,
         password: hash,
@@ -49,18 +47,20 @@ router.get('/', (req, res) => {
     .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 
-router.put('/tomat/:id', jsonParser, (req, res, next) => {
+
+router.use(jsonParser);
+const jwtAuth = passport.authenticate('jwt', {session: false});
+
+router.put('/tomat/:id', jwtAuth, (req, res, next) => {
   const { id } = req.params;
   const { tomat } = req.body;
   let user;
   return User.find({_id: id})
     .then(_user => {
       user = _user;
-      console.log('user:' + _user);
       return User.findOneAndUpdate({_id: id}, {$push:{tomats: { type:tomat.type, variety:tomat.variety}}}, {new: true});
     })
     .then(result => {
-      console.log(result);
       res.status(204).json(result);
     })
     .catch(err => {
